@@ -1,28 +1,51 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <NavPanel />
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import NavPanel from "./components/NavPanel"
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    NavPanel,
+  },
+  created() {
+    window.addEventListener('resize', this.resize)
+  },
+  mounted() {
+    this.resize()
+  },
+  methods: {
+    resize() {
+      var scale
+      var w = window.innerWidth
+      var h = window.innerHeight
+      scale = Math.min(
+        w / (this.$el.clientWidth + 120),    
+        h / (this.$el.clientHeight + 120)
+      );
+      this.$el.style.transform = `scale(${scale}, ${scale})`
+    }
   }
 }
 </script>
 
 <style>
+@import "./styles/styles.scss";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #F4F6F9;
+  box-shadow: 5px 7px 40px rgba(0, 0, 0, 0.2);
+  min-width: 1300px;
+  height: 800px;
+  border-radius: 50px;
+  display: flex;
+}
+main {
+  flex: 1;
 }
 </style>
