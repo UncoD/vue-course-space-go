@@ -2,6 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Home from '../views/Home.vue';
+import Rocket from '../views/Rocket.vue';
+import Team from '../views/Team.vue';
+import Weather from '../views/Weather.vue';
 
 Vue.use(VueRouter);
 
@@ -14,6 +17,24 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
+    meta: {},
+  },
+  {
+    path: '/rocket',
+    name: 'rocket',
+    component: Rocket,
+    meta: {},
+  },
+  {
+    path: '/team',
+    name: 'team',
+    component: Team,
+    meta: {},
+  },
+  {
+    path: '/weather',
+    name: 'weather',
+    component: Weather,
     meta: {},
   },
 ];
