@@ -4,11 +4,11 @@
       v-for="ind in tabNames.length"
       :key="ind"
       :to="toLink[ind - 1]"
+      exact-active-class="active-tab"
     >
       <div
-        @click="selectTab(ind - 1)"
         class="icon"
-        :class="[{ 'active-tab': activeIndex === ind - 1}, tabNames[ind - 1] ]"
+        :class="tabNames[ind - 1]"
       />
     </router-link>
   </nav>
@@ -19,14 +19,8 @@ export default {
   name: 'NavPanel',
   data() {
     return {
-      activeIndex: 0,
       tabNames: ["home", "small-icon rocket", "small-icon team", "small-icon weather"],
       toLink: ["home", "rocket", "team", "weather"]
-    }
-  },
-  methods: {
-    selectTab(index) {
-      this.activeIndex = index
     }
   }
 }
@@ -57,7 +51,7 @@ nav {
     opacity: 100%;
   }
 }
-.active-tab {
+.active-tab div {
   opacity: 100%;
 }
 .small-icon {

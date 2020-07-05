@@ -8,12 +8,8 @@
 </template>
 
 <script>
-import NavPanel from "./components/NavPanel"
 export default {
   name: 'App',
-  components: {
-    NavPanel,
-  },
   created() {
     window.addEventListener('resize', this.resize)
   },

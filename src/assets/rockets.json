@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Сокол-345",
+        "speed": 8,
+        "teamNumber": 2,
+        "iconPath": "/assets/rockets/sokol.svg"
+    },
+    {
+        "name": "Урског-123",
+        "speed": 6,
+        "teamNumber": 4,
+        "iconPath": "/assets/rockets/ursk.svg"
+    },
+    {
+        "name": "Урског-456",
+        "speed": 6,
+        "teamNumber": 3,
+        "iconPath": "/assets/rockets/ursknew.svg"
+    }
+]
