@@ -2,8 +2,10 @@
   <div class="team">
     <h1>Сбор команды</h1>
     <div class="card-container">
-      <div class="card card-team">
-        <h2>Команда</h2>
+      <Card
+        title="Команда"
+        class="team-card"
+      >
         <button
           class="make-btn"
           type="button"
@@ -11,51 +13,53 @@
         >
           Готово
         </button>
-        <table>
-          <tr>
-            <td class="team-captain">Капитан</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td class="team-engineer">Борт инженер</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td class="team-doctor">Врач</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td class="team-space-marine">Космодесантник</td>
-            <td>4</td>
-          </tr>
-        </table>
-      </div>
-      <div class="card">
-        <h2>Корабль</h2>
+        <dl>
+          <div>
+            <dt class="team-captain">Капитан</dt>
+            <dd>1</dd>
+          </div>
+          <div>
+            <dt class="team-engineer">Борт инженер</dt>
+            <dd>2</dd>
+          </div>
+          <div>
+            <dt class="team-doctor">Врач</dt>
+            <dd>3</dd>
+          </div>
+          <div>
+            <dt class="team-space-marine">Космодесантник</dt>
+            <dd>4</dd>
+          </div>
+        </dl>
+      </Card>
+      <Card
+        title="Корабль"
+        class="rocket-card"
+      >
         <div class="rocket-info-container">
-          <div class="rocket-icon" :style="{backgroundImage: `url(${rockets[curRocketInd].iconPath})`}"/>
-          <table>
-            <tr>
-              <td>Имя</td>
-              <td>{{ rockets[curRocketInd].name }}</td>
-            </tr>
-            <tr>
-              <td>Скорость</td>
-              <td>{{ rockets[curRocketInd].speed }} км/с</td>
-            </tr>
-            <tr>
-              <td>Экипаж</td>
-              <td>{{ rockets[curRocketInd].teamNumber }}</td>
-            </tr>
-          </table>
+          <img class="rocket-icon" :src="rockets[curRocketInd].iconPath">
+          <dl>
+            <div>
+              <dt>Имя</dt>
+              <dd>{{ rockets[curRocketInd].name }}</dd>
+            </div>
+            <div>
+              <dt>Скорость</dt>
+              <dd>{{ rockets[curRocketInd].speed }} км/с</dd>
+            </div>
+            <div>
+              <dt>Экипаж</dt>
+              <dd>{{ rockets[curRocketInd].teamNumber }}</dd>
+            </div>
+          </dl>
         </div>
-      </div>
-      <div
-        class="card card-man"
+      </Card>
+      <Card
+        class="card-man"
         v-for="(role, i) in team"
         :key="i"
+        :title="role.role"
       >
-        <h2>{{ role.role }}</h2>
         <ul>
           <li
             v-for="(emp, e) in role.employees"
@@ -72,7 +76,7 @@
             </label>
           </li>
         </ul>
-      </div>
+      </Card>
     </div>
   </div>
 </template>
@@ -111,59 +115,50 @@ export default {
   grid-row-gap: 52px;
 }
 .card {
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  background-color: #FFFFFF;
-  border-radius: 10px;
-  width: 500px;
-  height: 203px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  
-  h2 {
-    min-height: 58px;
-    font-size: 18px;
-    border-bottom: 1px solid #D8DCE3;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0 24px;
-  }
-
-  &--caps h2 {
-    color: #FF7D84;
-  }
+  margin: 0 !important;
+  padding-bottom: 10px !important;
 }
-.card-team {
-  table {
-    margin: 6px 28px 18px 31px;
-    border-collapse: collapse;
+.team-card, .rocket-card {
+  dl {
+    flex: 1;
+    margin: 0 28px;
 
-    tr {
-      td {
-        padding: 6px 0;
-      }
-      td:first-child {
+    div {
+      display:flex;
+      padding: 8px 0;
+
+      dt {
+        width: 40%;
         font-weight: bold;
         font-size: 18px;
-        line-height: 21px;
-        width: 40%;
+      }
+      dd {
+        margin-left: 0;
+        font-size: 18px;
+        color: #000000;
+      }
+
+      &:last-child {
+        border: 0;
       }
     }
-    tr {
-      .team-captain {
-        color: #FF7D84;
-      }
-      .team-engineer {
-        color: #E69F54;
-      }
-      .team-doctor {
-        color: #64D03F;
-      }
-      .team-space-marine {
-        color: #5A95F2;
-      }
-    }
+  }
+}
+.rocket-card dt {
+  color: #0A5499;
+}
+.team-card {
+  .team-captain {
+    color: #FF7D84;
+  }
+  .team-engineer {
+    color: #E69F54;
+  }
+  .team-doctor {
+    color: #64D03F;
+  }
+  .team-space-marine {
+    color: #5A95F2;
   }
 }
 .rocket-info-container {

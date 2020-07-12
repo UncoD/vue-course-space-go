@@ -61,7 +61,7 @@
     </div>
     <div class="images-container">
       <div class="planet" />
-      <img class="rocket" src="../assets/rocket.svg" />
+      <img class="rocket" src="../assets/rocket.svg">
     </div>
   </div>
 </template>

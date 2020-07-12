@@ -3,7 +3,7 @@
     <div class="rocket-info">
       <img
         class="rocket-icon"
-        :src="this.iconPath" />
+        :src="this.iconPath">
       <dl>
         <div>
           <dt>Имя</dt>
@@ -81,7 +81,7 @@ export default {
     margin: 0 17px 0 0;
 
     div {
-      display:flex;
+      display: flex;
       padding: 8px 10px;
       border-bottom: 1px solid #D1D9E5;
 

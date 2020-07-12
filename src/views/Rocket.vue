@@ -12,7 +12,7 @@
         >
           Собрать ракету
         </button>
-        <img class="rocket-icon" :src="rockets[curRocketInd].iconPath"/>
+        <img class="rocket-icon" :src="rockets[curRocketInd].iconPath">
         <dl>
           <div>
             <dt>Имя</dt>
