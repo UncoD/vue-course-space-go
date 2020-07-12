@@ -18,13 +18,12 @@ export default {
   },
   methods: {
     resize() {
-      var scale
-      var w = window.innerWidth
-      var h = window.innerHeight
-      scale = Math.min(
+      const w = window.innerWidth
+      const h = window.innerHeight
+      let scale = Math.min(
         w / (this.$el.clientWidth + 120),    
         h / (this.$el.clientHeight + 120)
-      );
+      )
       this.$el.style.transform = `scale(${scale}, ${scale})`
     }
   }

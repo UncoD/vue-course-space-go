@@ -1,8 +1,9 @@
 <template>
   <div class="rocket">
     <h1>Выбор корабля</h1>
-    <div class="choise">
-      <h2>Корабль</h2>
+    <Card
+      title="Корабль"
+    >
       <div class="info-container">
         <button
           class="make-btn"
@@ -11,23 +12,23 @@
         >
           Собрать ракету
         </button>
-        <div class="rocket-icon" :style="{backgroundImage: `url(${rockets[curRocketInd].iconPath})`}"/>
-        <table>
-          <tr>
-            <td>Имя</td>
-            <td>{{ rockets[curRocketInd].name }}</td>
-          </tr>
-          <tr>
-            <td>Скорость</td>
-            <td>{{ rockets[curRocketInd].speed }} км/с</td>
-          </tr>
-          <tr>
-            <td>Экипаж</td>
-            <td>{{ rockets[curRocketInd].teamNumber }}</td>
-          </tr>
-        </table>
+        <img class="rocket-icon" :src="rockets[curRocketInd].iconPath"/>
+        <dl>
+          <div>
+            <dt>Имя</dt>
+            <dd>{{ rockets[curRocketInd].name }}</dd>
+          </div>
+          <div>
+            <dt>Скорость</dt>
+            <dd>{{ rockets[curRocketInd].speed }} км/с</dd>
+          </div>
+          <div>
+            <dt>Экипаж</dt>
+            <dd>{{ rockets[curRocketInd].teamNumber }}</dd>
+          </div>
+        </dl>
       </div>
-    </div>
+    </Card>
     <div class="rockets-container">
       <RocketInfo
         v-for="(rocket, i) in rockets"
@@ -77,25 +78,11 @@ h2, button {
   line-height: 21px;
   color: #000000;
 }
-.choise {
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  background-color: #FFFFFF;
-  border-radius: 10px;
-  width: 500px;
-  min-height: 100px;
-  margin-top: 48px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  
-  h2 {
-    height: 58px;
-    border-bottom: 1px solid #D8DCE3;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0 24px;
-  }
+h1 {
+  margin-bottom: 21px;
+}
+.card {
+  width: 500px !important;
 
   .info-container {
     display: flex;
@@ -103,34 +90,37 @@ h2, button {
     padding: 20px 29px;
 
     .rocket-icon {
-      background-size: cover;
       width: 90px;
       height: 90px;
-      margin-right: 25px;
+      margin-right: 35px;
+    }
+    dl {
+      flex: 1;
+      margin: 0;
+
+      div {
+        display:flex;
+        padding: 8px 0;
+
+        dt {
+          width: 40%;
+          font-weight: bold;
+          font-size: 18px;
+          color: #0A5499;
+        }
+        dd {
+          margin-left: 0;
+          font-size: 18px;
+          color: #000000;
+        }
+
+        &:last-child {
+          border: 0;
+        }
+      }
     }
   }
-
-  table {
-    flex: 1;
-    border-collapse: collapse;
-
-    tr {
-      td {
-        font-size: 18px;
-        color: #000000;
-        line-height: 37px;
-        padding: 0;
-      }
-      td:first-child {
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 21px;
-        width: 50%;
-        padding-left: 15px;
-        color: #0A5499;
-      }
-    }
-  }
+  
   .make-btn {
     background: #73E24D;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
@@ -149,8 +139,15 @@ h2, button {
     &:focus {
       outline: none;
     }
+    &:hover {
+      background: #68ca47;
+    }
     &:active {
-      background: #53b532;
+      background: #59af3d;
+    }
+    &:disabled {
+      background: #E4E4E4;
+      color: #999999;
     }
   }
 }

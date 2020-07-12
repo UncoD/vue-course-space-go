@@ -1,12 +1,12 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-import Home from '../views/Home.vue';
-import Rocket from '../views/Rocket.vue';
-import Team from '../views/Team.vue';
-import Weather from '../views/Weather.vue';
+import Home from '../views/Home.vue'
+import Rocket from '../views/Rocket.vue'
+import Team from '../views/Team.vue'
+import Weather from '../views/Weather.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -37,21 +37,21 @@ const routes = [
     component: Weather,
     meta: {},
   },
-];
+]
 
 const router = new VueRouter({
   mode: 'history',
   routes
-});
+})
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title
     ? `${to.meta.title} | SpaceGo`
-    : 'SpaceGo';
+    : 'SpaceGo'
 
   window.scrollTo(0, 0)
 
-  next();
-});
+  next()
+})
 
 export default router

@@ -1,68 +1,81 @@
 <template>
   <div class="home">
     <div class="info-container">
-      <div class="container container--status">
-        <h2>Статус</h2>
+      <Card
+        title="Статус"
+        class="status"
+      >
         <button class="start-btn" disabled>Поехали!</button>
         <ul>
-          <li>Ракета выбрана</li>
-          <li>Команда собрана</li>
-          <li>Погода - ок</li>
+          <li :class="{'status-done' : rocketDone}">Ракета выбрана</li>
+          <li :class="{'status-done' : teamDone}">Команда собрана</li>
+          <li :class="{'status-done' : weatherDone}">Погода - ок</li>
         </ul>
-      </div>
-      <div class="container container--weather">
-        <h2>Погодные условия</h2>
-        <table>
-          <tr>
-            <td>Локация</td>
-            <td>Космодром Северный</td>
-          </tr>
-          <tr>
-            <td>Температура</td>
-            <td>+15</td>
-          </tr>
-          <tr>
-            <td>Влажность</td>
-            <td>54%</td>
-          </tr>
-          <tr>
-            <td>Ветер</td>
-            <td>5м\с, СЗ</td>
-          </tr>
-        </table>
-      </div>
-      <div class="container container--team">
-        <h2>Погодные условия</h2>
-        <table>
-          <tr>
-            <td class="team-capitan">Капитан</td>
-            <td>Константин Константинопольский</td>
-          </tr>
-          <tr>
-            <td class="team-engineer">Борт инженер</td>
-            <td>Иван Иванов</td>
-          </tr>
-          <tr>
-            <td class="team-doctor">Врач</td>
-            <td>Петр Петров</td>
-          </tr>
-          <tr>
-            <td class="team-space-marine">Космодесантник</td>
-            <td>Анастасия Преображенская</td>
-          </tr>
-        </table>
-      </div>
+      </Card>
+      <Card
+        title="Погодные условия"
+        class="weather"
+      >
+        <dl>
+          <div>
+            <dt>Локация</dt>
+            <dd>Космодром Северный</dd>
+          </div>
+          <div>
+            <dt>Температура</dt>
+            <dd>+15</dd>
+          </div>
+          <div>
+            <dt>Влажность</dt>
+            <dd>54%</dd>
+          </div>
+          <div>
+            <dt>Ветер</dt>
+            <dd>5м\с, СЗ</dd>
+          </div>
+        </dl>
+      </Card>
+      <Card
+        title="Экипаж"
+        class="team"
+      >
+        <dl>
+          <div>
+            <dt class="team-captain">Капитан</dt>
+            <dd>Константин Константинопольский</dd>
+          </div>
+          <div>
+            <dt class="team-engineer">Борт инженер</dt>
+            <dd>Иван Иванов</dd>
+          </div>
+          <div>
+            <dt class="team-doctor">Врач</dt>
+            <dd>Петр Петров</dd>
+          </div>
+          <div>
+            <dt class="team-space-marine">Космодесантник</dt>
+            <dd>Анастасия Преображенская</dd>
+          </div>
+        </dl>
+      </Card>
     </div>
     <div class="images-container">
       <div class="planet" />
-      <div class="rocket" />
+      <img class="rocket" src="../assets/rocket.svg" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Home',
+  data() {
+    return {
+      rocketDone: false,
+      teamDone: false,
+      weatherDone: false
+    }
+  }
 }
 </script>
 
@@ -74,7 +87,7 @@ export default {
   margin-left: -20px;
 }
 
-h2, button {
+button {
   font-weight: bold;
   font-size: 18px;
   line-height: 21px;
@@ -85,112 +98,78 @@ li {
   font-size: 18px;
   line-height: 27px;
 }
-
 .info-container {
   width: 50%;
   height: 100%;
 }
-.container {
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  background-color: #FFFFFF;
-  border-radius: 10px;
-  width: 100%;
-  min-height: 100px;
-  margin-top: 48px;
-  padding-bottom: 20px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+.status {
+  ul {
+    margin: 10px 0 0 24px;
+    list-style: none;
+    padding: 0;
 
-  h2 {
-    height: 58px;
-    border-bottom: 1px solid #D8DCE3;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0 24px;
-  }
-
-  &--status {
-    ul {
-      margin: 10px 0 0 24px;
-      list-style: none;
-      padding: 0;
-
-      li:before {
-        content: "";
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background-color: #FF7D84;
-        margin-right: 9px;
-      }
-      li:last-child:before {
-        background-color: #73E24D;
-      }
+    li:before {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: #FF7D84;
+      margin-right: 9px;
+    }
+    .status-done:before {
+      background-color: #73E24D;
     }
   }
+}
 
-  &--weather, &--team {
-    table {
-      flex: 1;
-      margin: 23px 28px 15px;
-      border-collapse: collapse;
+.weather, .team {
+  dl {
+    margin: 23px 28px 15px;
 
-      tr {
-        border-bottom: 1px solid #D1D9E5;
-        td {
-          font-size: 18px;
-          color: #000000;
-          line-height: 37px;
-          padding: 0;
-        }
-        td:first-child {
-          font-weight: bold;
-          font-size: 18px;
-          line-height: 21px;
-          width: 40%;
-          padding-left: 15px;
-        }
+    div {
+      border-bottom: 1px solid #D1D9E5;
+      display:flex;
+      padding: 8px 0;
 
-        &:last-child {
-          border: 0;
-        }
+      dt {
+        width: 40%;
+        font-weight: bold;
+        font-size: 18px;
       }
-    }
-  }
+      dd {
+        margin-left: 0;
+        font-size: 18px;
+        color: #000000;
+      }
 
-  &--weather {
-    td:first-child {
-      font-weight: bold;
-      font-size: 18px;
-      line-height: 21px;
-      color: #0A5499;
-    }
-  }
-
-  &--team {
-    table {
-      tr {
-        .team-capitan {
-          color: #FF7D84;
-        }
-        .team-engineer {
-          color: #E69F54;
-        }
-        .team-doctor {
-          color: #64D03F;
-        }
-        .team-space-marine {
-          color: #5A95F2;
-        }
+      &:last-child {
+        border: 0;
       }
     }
   }
 }
+.weather {
+  dt {
+    color: #0A5499;
+  }
+}
+.team {
+  .team-captain {
+    color: #FF7D84;
+  }
+  .team-engineer {
+    color: #E69F54;
+  }
+  .team-doctor {
+    color: #64D03F;
+  }
+  .team-space-marine {
+    color: #5A95F2;
+  }
+}
 .start-btn {
-  background: #E4E4E4;
+  background: #73E24D;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   border: 0;
@@ -199,10 +178,22 @@ li {
   position: absolute;
   top: 15px;
   right: 27px;
-  color: #999999;
+  color: #FFFFFF;
   font-size: 16px;
   line-height: 19px;
   cursor: pointer;
+  outline: none;
+
+  &:hover {
+    background: #68ca47;
+  }
+  &:active {
+    background: #59af3d;
+  }
+  &:disabled {
+    background: #E4E4E4;
+    color: #999999;
+  }
 }
 
 .images-container {
@@ -217,7 +208,6 @@ li {
     right: -35px;
   }
   .rocket {
-    background: url("../assets/rocket.svg") no-repeat;
     width: 410px;
     height: 410px;
     position: absolute;

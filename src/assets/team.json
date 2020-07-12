@@ -1,0 +1,58 @@
+[
+    {
+        "role": "Капитан",
+        "employees": 
+        [
+            {
+                "name": "Константин Константинопольский",
+                "icon": "assets/people/man_1.svg"
+            },
+            {
+                "name": "Анастасия Преображенская",
+                "icon": "assets/people/man_3.svg"
+            }
+        ]
+    },
+    {
+        "role": "Борт инженер",
+        "employees": 
+        [
+            {
+                "name": "Глеб Бобров",
+                "icon": "assets/people/man_2.svg"
+            },
+            {
+                "name": "Лев Елисеев",
+                "icon": "assets/people/man_4.svg"
+            }
+        ]
+    },
+    {
+        "role": "Врач",
+        "employees": 
+        [
+            {
+                "name": "Антон Копылов",
+                "icon": "assets/people/man_6.svg"
+            },
+            {
+                "name": "София Жданова",
+                "icon": "assets/people/man_5.svg"
+            }
+        ]
+    },
+    {
+        "role": "Космодесантник",
+        "employees": 
+        [
+            {
+                "name": "Валентина Мельникова",
+                "icon": "assets/people/man_7.svg"
+            },
+            {
+                "name": "Сергей Агафонов",
+                "icon": "assets/people/man_8.svg"
+            }
+        ]
+    }
+]

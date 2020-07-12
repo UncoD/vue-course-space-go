@@ -1,21 +1,23 @@
 <template>
   <div class="rocket-container">
     <div class="rocket-info">
-      <div class="rocket-icon" :style="imgStyle" />
-      <table>
-        <tr>
-          <td>Имя</td>
-          <td>{{ name }}</td>
-        </tr>
-        <tr>
-          <td>Скорость</td>
-          <td>{{ speed }} км/с</td>
-        </tr>
-        <tr>
-          <td>Экипаж</td>
-          <td>{{ teamNumber }}</td>
-        </tr>
-      </table>
+      <img
+        class="rocket-icon"
+        :src="this.iconPath" />
+      <dl>
+        <div>
+          <dt>Имя</dt>
+          <dd>{{ name }}</dd>
+        </div>
+        <div>
+          <dt>Скорость</dt>
+          <dd>{{ speed }} км/с</dd>
+        </div>
+        <div>
+          <dt>Экипаж</dt>
+          <dd>{{ teamNumber }}</dd>
+        </div>
+      </dl>
     </div>
     <label class="choose">
       <input
@@ -40,13 +42,6 @@ export default {
     teamNumber: { type: Number, required: true },
     checked: { type: Boolean, required: true },
     index: { type: Number, default: 0 }
-  },
-  computed: {
-    imgStyle() {
-      return {
-        backgroundImage: `url("${this.iconPath}")`
-      }
-    }
   }
 }
 </script>
@@ -79,6 +74,33 @@ export default {
     height: 80px;
     margin: 0 24px;
     background-size: contain;
+  }
+
+  dl {
+    flex: 1;
+    margin: 0 17px 0 0;
+
+    div {
+      display:flex;
+      padding: 8px 10px;
+      border-bottom: 1px solid #D1D9E5;
+
+      dt {
+        width: 50%;
+        font-weight: bold;
+        font-size: 18px;
+        color: #0A5499;
+      }
+      dd {
+        margin-left: 0;
+        font-size: 18px;
+        color: #000000;
+      }
+
+      &:last-child {
+        border: 0;
+      }
+    }
   }
 
   table {
