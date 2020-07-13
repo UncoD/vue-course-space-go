@@ -10,27 +10,32 @@
           class="make-btn"
           type="button"
           @click="saveTeam"
+          :disabled="curTeamNumber !== rockets[curRocketInd].teamNumber"
         >
           Готово
         </button>
         <dl>
-          <div>
-            <dt class="team-captain">Капитан</dt>
-            <dd>1</dd>
-          </div>
-          <div>
-            <dt class="team-engineer">Борт инженер</dt>
-            <dd>2</dd>
-          </div>
-          <div>
-            <dt class="team-doctor">Врач</dt>
-            <dd>3</dd>
-          </div>
-          <div>
-            <dt class="team-space-marine">Космодесантник</dt>
-            <dd>4</dd>
+          <div
+            v-for="(role, i) in team"
+            :key="i"
+          >
+            <dt :class="teamClasses[i]">{{role.role}}</dt>
+            <dd>
+              <img
+                class="member-icon"
+                v-for="(emp, i) in curTeam[role.role]"
+                :key="i"
+                :src="emp.icon"
+              >
+            </dd>
           </div>
         </dl>
+        <span class="warning" v-if="curTeamNumber !== rockets[curRocketInd].teamNumber">
+          Неверное количество экипажа!
+        </span>
+        <span class="success" v-if="isTeamSave">
+          Экипаж сохранен!
+        </span>
       </Card>
       <Card
         title="Корабль"
@@ -71,6 +76,8 @@
               <input
                 class="team-check"
                 type="checkbox"
+                v-model="curTeam[role.role]"
+                :value="emp"
               >
               <span />
             </label>
@@ -90,7 +97,25 @@ export default {
     return {
       rockets,
       team,
-      curRocketInd: 0
+      curRocketInd: 0,
+      curTeam: {},
+      teamClasses: ['team-captain', 'team-engineer', 'team-doctor', 'team-space-marine'],
+      isTeamSave: false
+    }
+  },
+  computed: {
+    curTeamNumber() {
+      let count = 0
+      Object.keys(this.curTeam).forEach(role => count += this.curTeam[role].length)
+      return count
+    }
+  },
+  created() {
+    if (localStorage.team) {
+      this.curTeam = JSON.parse(localStorage.team)
+    }
+    else {
+      this.team.forEach(role => this.$set(this.curTeam, role.role, []))
     }
   },
   mounted() {
@@ -100,7 +125,9 @@ export default {
   },
   methods: {
     saveTeam() {
-
+      localStorage.team = JSON.stringify(this.curTeam)
+      this.isTeamSave = true
+      setTimeout(() => this.isTeamSave = false, 1000)
     }
   }
 }
@@ -124,8 +151,8 @@ export default {
     margin: 0 28px;
 
     div {
-      display:flex;
-      padding: 8px 0;
+      display: flex;
+      padding: 5px 0;
 
       dt {
         width: 40%;
@@ -148,6 +175,16 @@ export default {
   color: #0A5499;
 }
 .team-card {
+  dl {
+    margin-top: 7px;
+  }
+  div {
+    height: 20px;
+  }
+  .member-icon {
+    width: 20px;
+    height: 20px;
+  }
   .team-captain {
     color: #FF7D84;
   }
@@ -171,27 +208,6 @@ export default {
     width: 90px;
     height: 90px;
     margin-right: 25px;
-  }
-  table {
-    flex: 1;
-    border-collapse: collapse;
-
-    tr {
-      td {
-        font-size: 18px;
-        color: #000000;
-        line-height: 37px;
-        padding: 0;
-      }
-      td:first-child {
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 21px;
-        width: 35%;
-        padding-left: 15px;
-        color: #0A5499;
-      }
-    }
   }
 }
 .card-man {
@@ -240,7 +256,19 @@ export default {
     }
   }
 }
+.warning, .success {
+  border-top: 1px solid #D8DCE3;
+  padding: 8px 0 0 28px;
+  margin-top: 8px;
+}
+.warning {
+  color: #fb1717;
+}
+.success {
+  color: #73E24D;
+}
 .make-btn {
+  font-weight: bold;
   background: #73E24D;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
