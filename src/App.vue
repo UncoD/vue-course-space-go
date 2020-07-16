@@ -2,7 +2,10 @@
   <div id="app">
     <NavPanel />
     <main>
-      <router-view />
+      <router-view
+        :weather="weather"
+        @weatherChecked="saveWeather"
+      />
     </main>
   </div>
 </template>
@@ -10,6 +13,11 @@
 <script>
 export default {
   name: 'App',
+  data() {
+    return {
+      weather: {}
+    }
+  },
   created() {
     window.addEventListener('resize', this.resize)
   },
@@ -25,6 +33,9 @@ export default {
         h / (this.$el.clientHeight + 120)
       )
       this.$el.style.transform = `scale(${scale}, ${scale})`
+    },
+    saveWeather(weather) {
+      this.weather = weather
     }
   }
 }

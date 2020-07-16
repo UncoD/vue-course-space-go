@@ -69,6 +69,9 @@
 <script>
 export default {
   name: 'Home',
+  props: {
+    weather: Object
+  },
   data() {
     return {
       rocketDone: false,
