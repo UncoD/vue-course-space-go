@@ -28,6 +28,9 @@
           </div>
         </dl>
       </div>
+      <span class="success" v-if="isRocketSave">
+        Ракета выбрана!
+      </span>
     </Card>
     <div class="rockets-container">
       <RocketInfo
@@ -52,7 +55,8 @@ export default {
   data() {
     return {
       rockets,
-      curRocketInd: 0
+      curRocketInd: 0,
+      isRocketSave: false
     }
   },
   mounted() {
@@ -66,6 +70,8 @@ export default {
     },
     saveRocket() {
       localStorage.curRocketInd = this.curRocketInd
+      this.isRocketSave = true
+      setTimeout(() => this.isRocketSave = false, 1000)
     }
   }
 }
@@ -178,5 +184,11 @@ h1 {
     margin-right: 45px;
     margin-bottom: 39px;
   }
+}
+.success {
+  border-top: 1px solid #D8DCE3;
+  padding: 8px 0 0 28px;
+  margin: 8px 0 -5px;
+  color: #73E24D;
 }
 </style>

@@ -5,7 +5,14 @@
         title="Статус"
         class="status"
       >
-        <button class="start-btn" disabled>Поехали!</button>
+        <button
+          class="start-btn"
+          type="button"
+          :disabled="!allDone"
+          @click="startRocket"
+        >
+          Поехали!
+        </button>
         <ul>
           <li :class="{'status-done' : rocketDone}">Ракета выбрана</li>
           <li :class="{'status-done' : teamDone}">Команда собрана</li>
@@ -19,19 +26,19 @@
         <dl>
           <div>
             <dt>Локация</dt>
-            <dd>Космодром Северный</dd>
+            <dd>{{ weatherLocation }}</dd>
           </div>
           <div>
             <dt>Температура</dt>
-            <dd>+15</dd>
+            <dd>{{ weatherTemp }}</dd>
           </div>
           <div>
             <dt>Влажность</dt>
-            <dd>54%</dd>
+            <dd>{{ weatherHumidity }}</dd>
           </div>
           <div>
             <dt>Ветер</dt>
-            <dd>5м\с, СЗ</dd>
+            <dd>{{ weatherWind }}</dd>
           </div>
         </dl>
       </Card>
@@ -40,33 +47,40 @@
         class="team"
       >
         <dl>
-          <div>
-            <dt class="team-captain">Капитан</dt>
-            <dd>Константин Константинопольский</dd>
-          </div>
-          <div>
-            <dt class="team-engineer">Борт инженер</dt>
-            <dd>Иван Иванов</dd>
-          </div>
-          <div>
-            <dt class="team-doctor">Врач</dt>
-            <dd>Петр Петров</dd>
-          </div>
-          <div>
-            <dt class="team-space-marine">Космодесантник</dt>
-            <dd>Анастасия Преображенская</dd>
+          <div
+            v-for="(emps, role, ind) in curTeam"
+            :key="ind"
+          >
+            <dt :class="teamClasses[ind]">{{role}}</dt>
+            <dd>
+              {{ emps.length === 0 ? "Нет" : "" }}
+              <li
+                class="member-info"
+                v-for="(emp, i) in emps"
+                :key="i"
+              >
+                {{ emp.name }}
+              </li>
+            </dd>
           </div>
         </dl>
       </Card>
     </div>
     <div class="images-container">
       <div class="planet" />
-      <img class="rocket" src="../assets/rocket.svg">
+      <img 
+        v-if="curRocket"
+        class="rocket" 
+        :src="curRocket.iconPath"
+        :class="{'fly-rocket': rocketFly}"
+      >
     </div>
   </div>
 </template>
 
 <script>
+import rockets from "../assets/rockets.json"
+import team from "../assets/team.json"
 export default {
   name: 'Home',
   props: {
@@ -74,9 +88,61 @@ export default {
   },
   data() {
     return {
-      rocketDone: false,
-      teamDone: false,
-      weatherDone: false
+      rockets,
+      team,
+      curRocket: {},
+      curTeam: {},
+      teamClasses: ['team-captain', 'team-engineer', 'team-doctor', 'team-space-marine'],
+      rocketFly: false
+    }
+  },
+  computed: {
+    teamDone() {
+      let count = 0
+      Object.keys(this.curTeam).forEach(role => count += this.curTeam[role].length)
+      return count !== 0
+    },
+    rocketDone() {
+      return this.curRocket.name !== {}
+    },
+    weatherDone() {
+      return this.weather.location !== undefined
+    },
+    weatherLocation() {
+      return this.weatherDone ? this.weather.location : "Не выбрана"
+    },
+    weatherTemp() {
+      return this.weatherDone ? `${(this.weather.temp > 0 ? '+' : '') + this.weather.temp}°C` : ""
+    },
+    weatherHumidity() {
+      return this.weatherDone ? `${this.weather.humidity}%` : ""
+    },
+    weatherWind() {
+      return this.weatherDone ? `${this.weather.windSpeed}м\\с, ${this.weather.windDir}` : ""
+    },
+    allDone() {
+      return this.teamDone && this.rocketDone && this.weatherDone
+    },
+  },
+  created() {
+    if (localStorage.curRocketInd) {
+      this.curRocket = rockets[localStorage.curRocketInd]
+    }
+    if (localStorage.team) {
+      this.curTeam = JSON.parse(localStorage.team)
+      let count = 0
+      Object.keys(this.curTeam).forEach(role => count += this.curTeam[role].length)
+      if (count !== this.curRocket.teamNumber) {
+        Object.keys(this.curTeam).forEach(role => this.curTeam[role] = [])
+      }
+    }
+    else {
+      this.team.forEach(role => this.$set(this.curTeam, role.role, []))
+    }
+  },
+  methods: {
+    startRocket() {
+      this.rocketFly = true
     }
   }
 }
@@ -128,12 +194,13 @@ li {
 
 .weather, .team {
   dl {
-    margin: 23px 28px 15px;
+    margin: 23px 28px 10px;
 
     div {
       border-bottom: 1px solid #D1D9E5;
-      display:flex;
+      display: flex;
       padding: 8px 0;
+      align-items: center;
 
       dt {
         width: 40%;
@@ -169,6 +236,29 @@ li {
   }
   .team-space-marine {
     color: #5A95F2;
+  }
+  .member-info {
+    list-style: none;
+  }
+
+  dl {
+    height: 175px;
+    overflow-y: auto;
+    margin-right: 10px;
+    padding-right: 10px;
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #E8E8E8;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #FF5800;
+      border-radius: 10px;
+    }
   }
 }
 .start-btn {
@@ -216,6 +306,10 @@ li {
     position: absolute;
     bottom: 50px;
     left: 60px;
+  }
+  .fly-rocket {
+    transform: translateY(-5000px);
+    transition: transform 6s ease-in-out;
   }
 }
 </style>
