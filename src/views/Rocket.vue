@@ -1,37 +1,37 @@
 <template>
   <div class="rocket">
     <h1>Выбор корабля</h1>
-    <Card
-      title="Корабль"
-    >
-      <div class="info-container">
-        <button
-          class="make-btn"
-          type="button"
-          @click="saveRocket"
-        >
-          Собрать ракету
-        </button>
-        <img class="rocket-icon" :src="rockets[curRocketInd].iconPath">
-        <dl>
-          <div>
-            <dt>Имя</dt>
-            <dd>{{ rockets[curRocketInd].name }}</dd>
-          </div>
-          <div>
-            <dt>Скорость</dt>
-            <dd>{{ rockets[curRocketInd].speed }} км/с</dd>
-          </div>
-          <div>
-            <dt>Экипаж</dt>
-            <dd>{{ rockets[curRocketInd].teamNumber }}</dd>
-          </div>
-        </dl>
-      </div>
-      <span class="success" v-if="isRocketSave">
-        Ракета выбрана!
-      </span>
-    </Card>
+    <div class="rocket-card">
+      <Card title="Корабль">
+        <div class="info-container">
+          <button
+            class="make-btn"
+            type="button"
+            @click="saveRocket"
+          >
+            Собрать ракету
+          </button>
+          <img class="rocket-icon" :src="rockets[curRocketInd].iconPath">
+          <dl>
+            <div>
+              <dt>Имя</dt>
+              <dd>{{ rockets[curRocketInd].name }}</dd>
+            </div>
+            <div>
+              <dt>Скорость</dt>
+              <dd>{{ rockets[curRocketInd].speed }} км/с</dd>
+            </div>
+            <div>
+              <dt>Экипаж</dt>
+              <dd>{{ rockets[curRocketInd].teamNumber }}</dd>
+            </div>
+          </dl>
+        </div>
+        <span class="success" v-if="isRocketSave">
+          Ракета выбрана!
+        </span>
+      </Card>
+    </div>
     <div class="rockets-container">
       <RocketInfo
         v-for="(rocket, i) in rockets"
@@ -87,8 +87,8 @@ h2, button {
 h1 {
   margin-bottom: 21px;
 }
-.card {
-  width: 500px !important;
+.rocket-card {
+  width: 500px;
 
   .info-container {
     display: flex;

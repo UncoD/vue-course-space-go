@@ -1,41 +1,40 @@
 <template>
   <div class="weather">
     <h1>Проверка погодных условий</h1>
-    <Card
-      title="Погодные условия"
-      class="card-weather"
-    >
-      <button
-        class="check-btn"
-        type="button"
-        @click="checkWeather"
-      >
-        Проверить
-      </button>
-      <dl>
-        <div>
-          <dt>Локация</dt>
-          <dd>
-            <input type="text" v-model="weather.location">
-          </dd>
-        </div>
-        <div>
-          <dt>Температура</dt>
-          <dd>{{ (weather.temp > 0 ? '+' : '') + weather.temp }}°C</dd>
-        </div>
-        <div>
-          <dt>Влажность</dt>
-          <dd>{{ weather.humidity }}%</dd>
-        </div>
-        <div>
-          <dt>Ветер</dt>
-          <dd>{{ weather.windSpeed }}м\с, {{ weather.windDir }}</dd>
-        </div>
-      </dl>
-      <span class="warning" v-if="weatherError">
-        Неверная локация!
-      </span>
-    </Card>
+    <div class="card-weather">
+      <Card title="Погодные условия">
+        <button
+          class="check-btn"
+          type="button"
+          @click="checkWeather"
+        >
+          Проверить
+        </button>
+        <dl>
+          <div>
+            <dt>Локация</dt>
+            <dd>
+              <input type="text" v-model="weather.location">
+            </dd>
+          </div>
+          <div>
+            <dt>Температура</dt>
+            <dd>{{ (weather.temp > 0 ? '+' : '') + weather.temp }}°C</dd>
+          </div>
+          <div>
+            <dt>Влажность</dt>
+            <dd>{{ weather.humidity }}%</dd>
+          </div>
+          <div>
+            <dt>Ветер</dt>
+            <dd>{{ weather.windSpeed }}м\с, {{ weather.windDir }}</dd>
+          </div>
+        </dl>
+        <span class="warning" v-if="weatherError">
+          Неверная локация!
+        </span>
+      </Card>
+    </div>
   </div>
 </template>
 
@@ -105,10 +104,9 @@ input {
   color: #fb1717;
 }
 .card-weather {
-  width: 50% !important;
-  padding-bottom: 0 !important;
+  width: 50%;
   dl {
-    margin: 10px 28px 10px;
+    margin: 10px 28px 0;
 
     div {
       border-bottom: 1px solid #D1D9E5;

@@ -2,88 +2,96 @@
   <div class="team">
     <h1>Сбор команды</h1>
     <div class="card-container">
-      <Card
-        title="Команда"
-        class="team-card"
-      >
-        <button
-          class="make-btn"
-          type="button"
-          @click="saveTeam"
-          :disabled="curTeamNumber !== rockets[curRocketInd].teamNumber"
+      <div class="card-wrapper">
+        <Card
+          title="Команда"
+          class="team-card"
         >
-          Готово
-        </button>
-        <dl>
-          <div
-            v-for="(role, i) in team"
-            :key="i"
+          <button
+            class="make-btn"
+            type="button"
+            @click="saveTeam"
+            :disabled="curTeamNumber !== rockets[curRocketInd].teamNumber"
           >
-            <dt :class="teamClasses[i]">{{role.role}}</dt>
-            <dd>
-              <img
-                class="member-icon"
-                v-for="(emp, i) in curTeam[role.role]"
-                :key="i"
-                :src="emp.icon"
-              >
-            </dd>
-          </div>
-        </dl>
-        <span class="warning" v-if="curTeamNumber !== rockets[curRocketInd].teamNumber">
-          Неверное количество экипажа!
-        </span>
-        <span class="success" v-if="isTeamSave">
-          Экипаж сохранен!
-        </span>
-      </Card>
-      <Card
-        title="Корабль"
-        class="rocket-card"
-      >
-        <div class="rocket-info-container">
-          <img class="rocket-icon" :src="rockets[curRocketInd].iconPath">
+            Готово
+          </button>
           <dl>
-            <div>
-              <dt>Имя</dt>
-              <dd>{{ rockets[curRocketInd].name }}</dd>
-            </div>
-            <div>
-              <dt>Скорость</dt>
-              <dd>{{ rockets[curRocketInd].speed }} км/с</dd>
-            </div>
-            <div>
-              <dt>Экипаж</dt>
-              <dd>{{ rockets[curRocketInd].teamNumber }}</dd>
+            <div
+              v-for="(role, i) in team"
+              :key="i"
+            >
+              <dt :class="teamClasses[i]">{{role.role}}</dt>
+              <dd>
+                <img
+                  class="member-icon"
+                  v-for="(emp, i) in curTeam[role.role]"
+                  :key="i"
+                  :src="emp.icon"
+                >
+              </dd>
             </div>
           </dl>
-        </div>
-      </Card>
-      <Card
-        class="card-man"
+          <span class="warning" v-if="curTeamNumber !== rockets[curRocketInd].teamNumber">
+            Неверное количество экипажа!
+          </span>
+          <span class="success" v-if="isTeamSave">
+            Экипаж сохранен!
+          </span>
+        </Card>
+      </div>
+      <div class="card-wrapper">
+        <Card
+          title="Корабль"
+          class="rocket-card"
+        >
+          <div class="rocket-info-container">
+            <img class="rocket-icon" :src="rockets[curRocketInd].iconPath">
+            <dl>
+              <div>
+                <dt>Имя</dt>
+                <dd>{{ rockets[curRocketInd].name }}</dd>
+              </div>
+              <div>
+                <dt>Скорость</dt>
+                <dd>{{ rockets[curRocketInd].speed }} км/с</dd>
+              </div>
+              <div>
+                <dt>Экипаж</dt>
+                <dd>{{ rockets[curRocketInd].teamNumber }}</dd>
+              </div>
+            </dl>
+          </div>
+        </Card>
+      </div>
+      <div
+        class="card-wrapper"
         v-for="(role, i) in team"
         :key="i"
-        :title="role.role"
       >
-        <ul>
-          <li
-            v-for="(emp, e) in role.employees"
-            :key="e"
-          >
-            <label class="emp-container">
-              <div class="man-icon" :style="{backgroundImage: `url(${emp.icon})`}" />
-              {{ emp.name }}
-              <input
-                class="team-check"
-                type="checkbox"
-                v-model="curTeam[role.role]"
-                :value="emp"
-              >
-              <span />
-            </label>
-          </li>
-        </ul>
-      </Card>
+        <Card
+          class="card-man"
+          :title="role.role"
+        >
+          <ul>
+            <li
+              v-for="(emp, e) in role.employees"
+              :key="e"
+            >
+              <label class="emp-container">
+                <div class="man-icon" :style="{backgroundImage: `url(${emp.icon})`}" />
+                {{ emp.name }}
+                <input
+                  class="team-check"
+                  type="checkbox"
+                  v-model="curTeam[role.role]"
+                  :value="emp"
+                >
+                <span />
+              </label>
+            </li>
+          </ul>
+        </Card>
+      </div>
     </div>
   </div>
 </template>
@@ -141,9 +149,9 @@ export default {
   grid-column-gap: 76px;
   grid-row-gap: 52px;
 }
-.card {
-  margin: 0 !important;
-  padding-bottom: 10px !important;
+.card-wrapper {
+  margin-top: -48px;
+  padding-bottom: -10px;
 }
 .team-card, .rocket-card {
   dl {
